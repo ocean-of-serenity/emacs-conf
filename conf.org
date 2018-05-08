@@ -50,6 +50,85 @@ Just type =y= to confirm stuff instead of having to write =yes=.
   ;;(setq inhibit-startup-message t)
 #+END_SRC
 
+** Cursor Manipulation
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind ("M-s" . avy-goto-char))
+#+END_SRC
+
+** Edit/Reload config
+#+BEGIN_SRC emacs-lisp
+  (defun visit-config-other-window ()
+    (interactive)
+    (find-file-other-window "~/.emacs.d/conf.org"))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defun reload-config ()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/conf.org")))
+#+END_SRC
+
+** Color highlighting
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-mode
+    :ensure t
+    :init (rainbow-mode 1))
+#+END_SRC
+
+** Window switching
+#+BEGIN_SRC emacs-lisp
+  (use-package switch-window
+    :ensure t
+    :config
+    (setq switch-window-input-style 'minibuffer)
+    (setq switch-window-increase 4)
+    (setq switch-window-threshold 1)
+    (setq switch-window-shortcut-style 'qwerty)
+    (setq switch-window-qwerty-shortcuts '("a" "s" "d" "f" "j" "k" "l" "'"))
+    :bind ([remap other-window] . switch-window))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defun split-and-switch-below ()
+    (interactive)
+    (split-window-below)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-switch-below)
+
+  (defun split-and-switch-right ()
+    (interactive)
+    (split-window-right)
+    (balance-windows)
+    (other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-switch-right)
+#+END_SRC
+
+** CamelCase
+#+BEGIN_SRC emacs-lisp
+  (global-subword-mode 1)
+#+END_SRC
+** Electric Pairs
+#+BEGIN_SRC emacs-lisp
+  (setq electric-pair-pairs '(
+                              (?\( . ?\))
+                              (?\{ . ?\})
+                              (?\[ . ?\])
+                              (?\" . ?\")))
+  (electric-pair-mode 1)
+#+END_SRC
+** Hungry delete
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :ensure t
+    :config (global-hungry-delete-mode))
+#+END_SRC
+** Sudo edit
+#+BEGIN_SRC emacs-lisp
+  (use-package sudo-edit
+    :ensure t
+    :bind ("s-e" . sudo-edit))
+#+END_SRC
 * Terminal
 ** Standard Terminal
 Set up =bin/bash= as standard for =ansi-term=.
@@ -134,3 +213,7 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
     :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
 
+** Edit special
+#+BEGIN_SRC emacs-lisp
+  (setq org-src-window-setup 'current-window)
+#+END_SRC
