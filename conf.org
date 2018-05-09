@@ -1,20 +1,16 @@
 * Miscellaneous
 ** Minibuffer confirmation promt
-Just type =y= to confirm stuff instead of having to write =yes=.
 #+BEGIN_SRC emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
-
 ** Scrolling mode
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 100)
 #+END_SRC
-
 ** Bell
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
-
 ** Line highlighting
 *** Global line-highlighting mode
 #+BEGIN_SRC emacs-lisp
@@ -26,37 +22,31 @@ Just type =y= to confirm stuff instead of having to write =yes=.
     :ensure t
     :init (beacon-mode 1))
 #+END_SRC
-
 ** Backup/Autosave
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-file nil)
   (setq auto-save-default nil)
 #+END_SRC
-
 ** Menu/Tool/Scroll-Bar
 #+BEGIN_SRC emacs-lisp
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
 #+END_SRC
-
 ** Pretty symbols
 #+BEGIN_SRC emacs-lisp
   (when window-system (global-prettify-symbols-mode t))
 #+END_SRC
-
 ** Startup message
 #+BEGIN_SRC emacs-lisp
   ;;(setq inhibit-startup-message t)
 #+END_SRC
-
 ** Cursor Manipulation
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
     :bind ("M-s" . avy-goto-char))
 #+END_SRC
-
 ** Edit/Reload config
 #+BEGIN_SRC emacs-lisp
   (defun visit-config-other-window ()
@@ -68,14 +58,12 @@ Just type =y= to confirm stuff instead of having to write =yes=.
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/conf.org")))
 #+END_SRC
-
 ** Color highlighting
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode
     :ensure t
     :init (rainbow-mode 1))
 #+END_SRC
-
 ** Window switching
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
@@ -103,7 +91,6 @@ Just type =y= to confirm stuff instead of having to write =yes=.
     (other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-switch-right)
 #+END_SRC
-
 ** CamelCase
 #+BEGIN_SRC emacs-lisp
   (global-subword-mode 1)
@@ -117,6 +104,12 @@ Just type =y= to confirm stuff instead of having to write =yes=.
                               (?\" . ?\")))
   (electric-pair-mode 1)
 #+END_SRC
+** Colored Delimeters
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init (rainbow-delimiters-mode 1))
+#+END_SRC
 ** Hungry delete
 #+BEGIN_SRC emacs-lisp
   (use-package hungry-delete
@@ -129,22 +122,64 @@ Just type =y= to confirm stuff instead of having to write =yes=.
     :ensure t
     :bind ("s-e" . sudo-edit))
 #+END_SRC
+** Line/Column number on modeline
+#+BEGIN_SRC emacs-lisp
+  (line-number-mode 1)
+  (column-number-mode 1)
+#+END_SRC
+** Startup Screen File History
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents . 16)))
+    (setq dashboard-banner-logo-title "Moin"))
+#+END_SRC
+** Clock
+#+BEGIN_SRC emacs-lisp
+  (setq display-time-24hr-format t)
+  (display-time-mode 1)
+#+END_SRC
+** Autocompletion
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :init (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+** Modeline
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+    (setq powerline-default-separator (quote arrow))
+    (spaceline-spacemacs-theme))
+#+END_SRC
+** Kill Ring
+#+BEGIN_SRC emacs-lisp
+  (use-package popup-kill-ring
+    :ensure t
+    :bind ("M-y" . popup-kill-ring))
+#+END_SRC
+** Search
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :ensure t
+    :bind ("C-s" . swiper))
+#+END_SRC
 * Terminal
 ** Standard Terminal
-Set up =bin/bash= as standard for =ansi-term=.
 #+BEGIN_SRC emacs-lisp
   (defvar admiral-ansi-term-shell "/bin/bash")
   (defadvice ansi-term (before force-bash)
     (interactive (list admiral-ansi-term-shell)))
   (ad-activate 'ansi-term)
 #+END_SRC
-
 ** Quick-Launch Key
-Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<s-return>") 'ansi-term)
 #+END_SRC
-
 * Commands
 ** Key chord completion options
 #+BEGIN_SRC emacs-lisp
@@ -152,7 +187,6 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
     :ensure t
     :init (which-key-mode))
 #+END_SRC
-
 ** Key chord completion selection menu
 #+BEGIN_SRC emacs-lisp
   (use-package smex
@@ -160,7 +194,6 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
     :init (smex-initialize)
     :bind ("M-x" . smex))
 #+END_SRC
-
 ** File Selection Menu
 *** Enable Ido mode
 #+BEGIN_SRC emacs-lisp
@@ -169,7 +202,6 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
   (setq ido-everywhere t)
   (ido-mode 1)
 #+END_SRC
-
 *** Ido vertical
 #+BEGIN_SRC emacs-lisp
   (use-package ido-vertical-mode
@@ -177,13 +209,17 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
     :init (ido-vertical-mode 1))
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
 #+END_SRC
-
 ** Improved Buffer List
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "C-x b") 'ido-switch-buffer)
 #+END_SRC
-
+** Dmenu
+#+BEGIN_SRC emacs-lisp
+  (use-package dmenu
+    :ensure t
+    :bind ("s-SPC" . 'dmenu))
+#+END_SRC
 * Window Manager
 ** EXWM
 #+BEGIN_SRC emacs-lisp
@@ -193,13 +229,11 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
       (require 'exwm-config)
       (exwm-config-default))
 #+END_SRC
-
 ** EXWM System tray
 #+BEGIN_SRC emacs-lisp
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
 #+END_SRC
-
 * Org
 ** Org mode
 #+BEGIN_SRC emacs-lisp
@@ -212,8 +246,12 @@ Launch =ansi-term= on <SUPER>-<RETURN>, like i3wm.
     :ensure t
     :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
-
 ** Edit special
 #+BEGIN_SRC emacs-lisp
   (setq org-src-window-setup 'current-window)
+#+END_SRC
+** Emacs lisp structure template
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 #+END_SRC
