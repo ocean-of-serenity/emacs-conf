@@ -32,7 +32,7 @@
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (pdf-tools swiper popup-kill-ring dmenu spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode org-bullets beacon exwm-config spacemacs-theme which-key use-package exwm))))
+    (company-irony pdf-tools swiper popup-kill-ring dmenu spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode org-bullets beacon exwm-config spacemacs-theme which-key use-package exwm))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
