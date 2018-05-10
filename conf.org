@@ -172,6 +172,15 @@ Requires CMake for irony-install-server, which compiles a bunch of stuff.
     (add-hook 'c-mode-hook 'company-mode)
     (add-hook 'c++-mode-hook 'company-mode))
 #+END_SRC
+** Snippets
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-reload-all))
+#+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
