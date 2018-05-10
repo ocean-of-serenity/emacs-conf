@@ -62,7 +62,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode
     :ensure t
-    :init (rainbow-mode 1))
+    :init (add-hook 'prog-mode-hook 'rainbow-mode))
 #+END_SRC
 ** Window switching
 #+BEGIN_SRC emacs-lisp
@@ -139,6 +139,7 @@
 ** Clock
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t)
+  (setq display-time-format "%d.%m.%Y %H:%M")
   (display-time-mode 1)
 #+END_SRC
 ** Autocompletion
@@ -254,6 +255,10 @@
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+#+END_SRC
+** Indent Mode
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
 #+END_SRC
 * PDFs
 #+BEGIN_SRC emacs-lisp
