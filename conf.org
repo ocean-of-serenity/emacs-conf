@@ -180,6 +180,10 @@ Requires CMake for irony-install-server, which compiles a bunch of stuff.
     (use-package yasnippet-snippets
       :ensure t)
     (yas-reload-all))
+
+  (add-hook 'c-mode-hook 'yas-minor-mode)
+  (add-hook 'c++-mode-hook 'yas-minor-mode)
+  (add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
