@@ -256,7 +256,7 @@ Requires CMake for irony-install-server, which compiles a bunch of stuff.
 #+BEGIN_SRC emacs-lisp
   (use-package dmenu
     :ensure t
-    :bind ("s-SPC" . 'dmenu))
+    :bind ("s-d" . 'dmenu))
 #+END_SRC
 * Window Manager
 ** EXWM

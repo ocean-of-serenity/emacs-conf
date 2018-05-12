@@ -30,6 +30,9 @@
    (quote
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(line-number-mode nil)
+ '(org-html-preamble-format
+   (quote
+    (("en" "<center class=\"author\">%a</center><center class=\"author\">%e</center><center class=\"date\">%C</center>"))))
  '(package-selected-packages
    (quote
     (yasnippet-snippets yasnippet company-irony pdf-tools swiper popup-kill-ring dmenu spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode org-bullets beacon exwm-config spacemacs-theme which-key use-package exwm))))
