@@ -30,7 +30,7 @@
 
 (use-package org
   :ensure t
-  :config (setq org-indent-mode t))
+  :hook (org-mode . org-indent-mode))
 
 (use-package org-bullets
   :after org
