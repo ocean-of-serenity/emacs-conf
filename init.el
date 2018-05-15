@@ -1,44 +1,92 @@
-;; Ensure emacs has package management
-(require 'package)
 
-;; Add melpa to package database
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
+
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
+(setq scroll-conservatively 100)
+
+(global-hl-line-mode)
+
+
+(require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-;; Install use-package for easier package management in config file
 (unless (package-installed-p 'use-package)
-	(package-refresh-contents)
-	(package-install 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-;; Install Spacemacs theme
-(unless (package-installed-p 'spacemacs-theme)
-	(package-refresh-contents)
-	(package-install 'spacemacs-theme))
 
-;; Load emacs lisp code from orgmode config file
-(org-babel-load-file (expand-file-name "~/.emacs.d/conf.org"))
+(use-package try
+  :ensure t)
+
+(use-package org
+  :ensure t
+  :config (setq org-indent-mode t))
+
+(use-package org-bullets
+  :after org
+  :ensure t
+  :hook (org-mode . (lambda () (org-bullets-mode 1))))
+
+(use-package evil
+  :ensure t
+  :config (evil-mode 1))
+
+(use-package evil-org
+  :ensure t
+  :after (evil org)
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+
+(use-package linum-relative
+  :ensure t
+  :hook ((org-mode prog-mode text-mode) . (lambda () (linum-relative-mode 1)))) 
+
+(use-package hlinum
+  :ensure t
+  :config (hlinum-activate))
+
+(use-package solarized-theme
+  :ensure t)
+
+(use-package powerline
+  :ensure t
+  :config (powerline-default-theme))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (spacemacs-dark)))
+ '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(line-number-mode nil)
- '(org-html-preamble-format
-   (quote
-    (("en" "<center class=\"author\">%a</center><center class=\"author\">%e</center><center class=\"date\">%C</center>"))))
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yasnippet company-irony pdf-tools swiper popup-kill-ring dmenu spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode org-bullets beacon exwm-config spacemacs-theme which-key use-package exwm))))
+    (hlinum powerline solarized-theme linum-relative which-key evil-org evil org-bullets try use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "GOOG" :family "Source Code Pro")))))
+ )
